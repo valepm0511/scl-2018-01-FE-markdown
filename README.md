@@ -317,6 +317,22 @@ habilidades blandas. Te aconsejamos revisar la rúbrica:
 - [ ] Documentación técnica de la librería.
 - [ ] Guía de uso e instalación de la librería
 
+### API `mdLinks(path, opts)`
+
+- [ ] El módulo exporta una función con la interfaz (API) esperada.
+- [ ] Implementa soporte para archivo individual
+- [ ] Implementa soporte para directorios
+- [ ] Implementa `options.validate`
+
+### CLI
+
+- [ ] Expone ejecutable `md-links` en el path (configurado en `package.json`)
+- [ ] Se ejecuta sin errores / output esperado
+- [ ] Implementa `--validate`
+- [ ] Implementa `--stats`
+- [ ] Implementa `--validate --stats`
+- [ ] Implementa `--stats --validate`
+
 ### Pruebas / tests
 
 - [ ] Pruebas unitarias cubren un mínimo del 70% de statements, functions,
