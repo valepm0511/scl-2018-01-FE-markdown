@@ -78,7 +78,6 @@ Tópicos:
 - [Semver](https://semver.org/)
 - [Path](https://nodejs.org/api/path.html)
 - [File System](https://nodejs.org/api/fs.html)
-- [marked](https://github.com/markedjs/marked)
 - [Asíncronía en js](https://carlosazaustre.com/manejando-la-asincronia-en-javascript/)
 
 ### Documentación requerida
@@ -107,7 +106,7 @@ Y todo lo relevante para que cualquier developer que quiera usar tu librería pu
 - `.gitignore` para ignorar `node_modules` u otras carpetas que no deban
   incluirse en control de versiones (`git`).
 - `test/md-links.spec.js` debe contener los tests unitarios para la función
-  `mdLinks()`tu inplementación debe pasar estos tets.
+  `mdLinks()`tu implementación debe pasar estos tests.
 
 ### JavaScript API
 
@@ -118,11 +117,10 @@ siguiente interfaz:
 
 ##### Argumentos
 
-- `path`: Ruta absoluta o relativa al archivo o directorio. Si la ruta pasada es relativa, debe resolverse como relativa al directorio desde donde se invoca node - _currentworking directory_).
+- `path`: Ruta absoluta o relativa al archivo. Si la ruta pasada es relativa, debe resolverse como relativa al directorio desde donde se invoca node - _currentworking directory_).
 
-- `options`: Un objeto con las siguientes propiedades:
+- `options`: Un objeto con la siguiente propiedad:
   - `validate`: Valor que determina si se desea validar los links encontrados en el archivo. (tipo de dato booleano)
-  - `stats`: Valor que determina si se desea calcular los stats de de los links encontrados en el archivo. (tipo de dato booleano)
 
 ##### Valor de retorno
 
@@ -157,6 +155,9 @@ mdLinks("./some/example.md", { stats: true })
   })
   .catch(console.error);
 
+/*
+ * HACKER EDITION
+ */
 mdLinks("./some/dir")
   .then(links => {
     // => [{ href, text, file }]
@@ -175,16 +176,16 @@ Por ejemplo:
 
 ```sh
 $ md-links ./some/example.md
-./some/example.md http://algo.com/2/3/ Link a algo
-./some/example.md https://otra-cosa.net/algun-doc.html algún doc
-./some/example.md http://google.com/ Google
+./some/example.md:10 http://algo.com/2/3/ Link a algo
+./some/example.md:15 https://otra-cosa.net/algun-doc.html algún doc
+./some/example.md:40 http://google.com/ Google
 ```
 
 El comportamiento por defecto no debe validar si las URLs responden ok o no,
 solo debe identificar el archivo markdown (a partir de la ruta que recibe como
 argumento), analizar el archivo Markdown e imprimir los links que vaya
-encontrando, junto con la ruta del archivo donde aparece y el texto
-que hay dentro del link (truncado a 50 caracteres).
+encontrando, junto con la ruta del archivo y la linea donde aparece, así como
+también el texto que hay dentro del link (truncado a 50 caracteres).
 
 #### Options
 
@@ -198,35 +199,14 @@ Por ejemplo:
 
 ```sh
 $ md-links ./some/example.md --validate
-./some/example.md http://algo.com/2/3/ ok 200 Link a algo
-./some/example.md https://otra-cosa.net/algun-doc.html fail 404 algún doc
-./some/example.md http://google.com/ ok 301 Google
+./some/example.md:10 http://algo.com/2/3/ ok 200 Link a algo
+./some/example.md:15 https://otra-cosa.net/algun-doc.html fail 404 algún doc
+./some/example.md:40 http://google.com/ ok 301 Google
 ```
 
 Vemos que el _output_ en este caso incluye la palabra `ok` o `fail` después de
 la URL, así como el status de la respuesta recibida a la petición HTTP a dicha
 URL.
-
-##### `--stats`
-
-Si pasamos la opción `--stats` el output (salida) será un texto con estadísticas
-básicas sobre los links.
-
-```sh
-$ md-links ./some/example.md --stats
-Total: 3
-Unique: 3
-```
-
-También podemos combinar `--stats` y `--validate` para obtener estadísticas que
-necesiten de los resultados de la validación.
-
-```sh
-$ md-links ./some/example.md --stats --validate
-Total: 3
-Unique: 3
-Broken: 1
-```
 
 ## Entregables
 
@@ -236,6 +216,7 @@ para usarlo programáticamente.
 
 ## Hacker edition
 
+- Detectar y recorrer carpetas también (recursivamente)
 - Puedes agregar más estadísticas.
 - Integración continua con Travis o Circle CI.
 
@@ -243,7 +224,6 @@ para usarlo programáticamente.
 
 ### Pistas
 
-- [Marked](https://github.com/markedjs/marked/blob/master/docs/USING_PRO.md)
 - [NPM](https://docs.npmjs.com/getting-started/what-is-npm)
 - [Publicar packpage](https://docs.npmjs.com/getting-started/publishing-npm-packages)
 - [Crear módulos en Node.js](https://docs.npmjs.com/getting-started/publishing-npm-packages)
@@ -251,6 +231,49 @@ para usarlo programáticamente.
 - [Leer un Directorio](https://nodejs.org/api/fs.html#fs_fs_readdir_path_options_callback)
 - [Path](https://nodejs.org/api/path.html)
 - [Linea de comando CLI](https://medium.com/netscape/a-guide-to-create-a-nodejs-command-line-package-c2166ad0452e)
+
+### Función que extrae links
+```javascript
+//Es necesario que instales marked como dependencia de tu proyecto
+//npm install --save marked
+const Marked = require('marked');
+
+// Función necesaria para extraer los links usando marked
+// (tomada desde biblioteca del mismo nombre y modificada para el ejercicio)
+// Recibe texto en markdown y retorna sus links en un arreglo
+function markdownLinkExtractor(markdown) {
+  const links = [];
+
+  const renderer = new Marked.Renderer();
+
+  // Taken from https://github.com/markedjs/marked/issues/1279
+  const linkWithImageSizeSupport = /^!?\[((?:\[[^\[\]]*\]|\\[\[\]]?|`[^`]*`|[^\[\]\\])*?)\]\(\s*(<(?:\\[<>]?|[^\s<>\\])*>|(?:\\[()]?|\([^\s\x00-\x1f()\\]*\)|[^\s\x00-\x1f()\\])*?(?:\s+=(?:[\w%]+)?x(?:[\w%]+)?)?)(?:\s+("(?:\\"?|[^"\\])*"|'(?:\\'?|[^'\\])*'|\((?:\\\)?|[^)\\])*\)))?\s*\)/;
+
+  Marked.InlineLexer.rules.normal.link = linkWithImageSizeSupport;
+  Marked.InlineLexer.rules.gfm.link = linkWithImageSizeSupport;
+  Marked.InlineLexer.rules.breaks.link = linkWithImageSizeSupport;
+
+  renderer.link = function(href, title, text) {
+    links.push({
+      href: href,
+      text: text,
+      title: title,
+    });
+  };
+  renderer.image = function(href, title, text) {
+      // Remove image size at the end, e.g. ' =20%x50'
+      href = href.replace(/ =\d*%?x\d*%?$/, '');
+      links.push({
+        href: href,
+        text: text,
+        title: title,
+      });
+  };
+  Marked(markdown, {renderer: renderer});
+
+  return links;
+};
+```
 
 ### Tutoriales / NodeSchool workshoppers
 
@@ -280,7 +303,7 @@ para usarlo programáticamente.
 | Nomenclatura/semántica | 3              |
 | Funciones/modularidad  | 3              |
 | Estructuras de datos   | 2              |
-| Tests                  | 4              |  |
+| Tests                  | 3              |  |
 | **SCM**                |                |
 | Git                    | 3              |
 | GitHub                 | 3              |
@@ -321,7 +344,6 @@ habilidades blandas. Te aconsejamos revisar la rúbrica:
 
 - [ ] El módulo exporta una función con la interfaz (API) esperada.
 - [ ] Implementa soporte para archivo individual
-- [ ] Implementa soporte para directorios
 - [ ] Implementa `options.validate`
 
 ### CLI
@@ -329,9 +351,6 @@ habilidades blandas. Te aconsejamos revisar la rúbrica:
 - [ ] Expone ejecutable `md-links` en el path (configurado en `package.json`)
 - [ ] Se ejecuta sin errores / output esperado
 - [ ] Implementa `--validate`
-- [ ] Implementa `--stats`
-- [ ] Implementa `--validate --stats`
-- [ ] Implementa `--stats --validate`
 
 ### Pruebas / tests
 
