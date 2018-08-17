@@ -99,8 +99,6 @@ Y todo lo relevante para que cualquier developer que quiera usar tu librería pu
 - `index.js`: Desde este archivo debes exportar una función (`mdLinks`).
 - `package.json` con nombre, versión, descripción, autores, licencia,
   dependencias, scripts (pretest, test, ...)
-- `.editorconfig` con configuración para editores de texto. Este archivo no se
-  debe cambiar.
 - `.eslintrc` con configuración para linter. Este archivo no
   se debe cambiar.
 - `.gitignore` para ignorar `node_modules` u otras carpetas que no deban
@@ -216,8 +214,9 @@ para usarlo programáticamente.
 
 ## Hacker edition
 
-- Detectar y recorrer carpetas también (recursivamente)
-- Puedes agregar más estadísticas.
+- Detectar y recorrer carpetas (recursivamente)
+- Agregar una opción `--stats` para mostrar estadísticas del archivo, como
+cuántos links encontró.
 - Integración continua con Travis o Circle CI.
 
 ## Pistas / Tips / Recursos
@@ -303,7 +302,7 @@ function markdownLinkExtractor(markdown) {
 | Nomenclatura/semántica | 3              |
 | Funciones/modularidad  | 3              |
 | Estructuras de datos   | 2              |
-| Tests                  | 3              |  |
+| Tests                  | 3              |
 | **SCM**                |                |
 | Git                    | 3              |
 | GitHub                 | 3              |
