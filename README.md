@@ -23,12 +23,12 @@ algunas estadísticas.
 
 [Node.js](https://nodejs.org/es/) es un entorno de ejecución para JavaScript
 construido con el [motor de JavaScript V8 de Chrome](https://developers.google.com/v8/).
-Esto nos va a permitir ejecuta JavaScript en el entorno del sistema operativo,
+Esto nos va a permitir ejecutar JavaScript en el entorno del sistema operativo,
 ya sea tu máquina o un servidor, lo cual nos abre las puertas para poder interactuar con
-el sistema operativo, sistema de archivos, redes, ...
+el sistema operativo, sistema de archivos, redes, etc...
 En este proyecto nos alejamos un poco del navegador para construir un programa
 que se ejecute usando Node.js, donde aprenderemos sobre cómo interactuar con el
-sistema archivos, con el entorno (proceso, env, stdin/stdout/stderr), ...
+sistema, archivos y con el entorno (proceso, env, stdin/stdout/stderr), ...
 
 ## Objetivos
 
@@ -115,7 +115,7 @@ siguiente interfaz:
 
 ##### Argumentos
 
-- `path`: Ruta absoluta o relativa al archivo. Si la ruta pasada es relativa, debe resolverse como relativa al directorio desde donde se invoca node - _currentworking directory_).
+- `path`: Ruta absoluta o relativa al archivo. Si la ruta pasada es relativa, debe resolverse como relativa al directorio desde donde se invoca node - _currentworking directory_.
 
 - `options`: Un objeto con la siguiente propiedad:
   - `validate`: Valor que determina si se desea validar los links encontrados en el archivo. (tipo de dato booleano)
