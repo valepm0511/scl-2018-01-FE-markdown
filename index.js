@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+
 const mdLinks = function markdownLinkExtractor(markdown) {
   // Función necesaria para extraer los links usando marked
   // Recibe texto en markdown y retorna sus links en un arreglo
@@ -14,27 +15,28 @@ const mdLinks = function markdownLinkExtractor(markdown) {
   Marked.InlineLexer.rules.gfm.link = linkWithImageSizeSupport;
   Marked.InlineLexer.rules.breaks.link = linkWithImageSizeSupport;
 
-  renderer.link = function(href, title, text, line) {
+  renderer.link = (href, title, text) => {
     links.push({
       href: href,
       text: text,
-      title: title,
+      // title: title,
     });
   };
-  renderer.image = function(href, title, text, line) {
+
+  renderer.image = (href, title, text) => {
     // Remove image size at the end, e.g. ' =20%x50'
     href = href.replace(/ =\d*%?x\d*%?$/, '');
     links.push({
       href: href,
       text: text,
-      title: title,
+      // title: title,
     });
   };
   Marked(markdown, {renderer: renderer});
 
   return links;
 };
-module.exports = mdLinks;
+
 
 let fs = require('fs');
 let path = require('path');
@@ -53,17 +55,28 @@ fs.readdir(cwdToString, (err, files) => {
     console.log(err.message);
   } else {
     files.forEach(file => {
-        // console.log(file);
+      // console.log(file);
         // Selecciona los archivos con extensión .md
         if (path.extname(file) === '.md') { 
-          //console.log("archivo .md")
-          console.log(file);
+          // console.log(file);
            // lee los archivos con extension .md
            fs.readFile(file, 'utf8', function(err, data) {
             if (err) {
               console.log(err);
-            } else {
-              console.log(mdLinks(data));
+              //rechaza la promesa
+              return reject(err);
+            } 
+            else {
+              // retorna promesa con array de objeto
+              // console.log(mdLinks(data));
+              mdLinks(data).forEach(element => {
+                fetch(`${element.href}`, { validate: true }).then((response)=>{
+                  // retorna la lista de url con status
+                  // console.log(response.url, 
+                  //   response.status, 
+                  //   response.statusText);
+                });
+              });
             }
           });
          }
@@ -72,4 +85,4 @@ fs.readdir(cwdToString, (err, files) => {
 });
 
 
-
+module.exports = mdLinks;
