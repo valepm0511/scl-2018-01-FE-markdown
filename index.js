@@ -33,7 +33,6 @@ const mdLinks = function markdownLinkExtractor(markdown) {
     });
   };
   Marked(markdown, {renderer: renderer});
-
   return links;
 };
 
@@ -81,6 +80,7 @@ fs.readdir(cwdToString, (err, files) => {
           });
          }
        });
+    
   }
 });
 
