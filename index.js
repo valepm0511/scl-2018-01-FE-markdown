@@ -19,7 +19,7 @@ const mdLinks = function markdownLinkExtractor(markdown) {
     links.push({
       href: href,
       text: text,
-      // title: title,
+      title: title,
     });
   };
 
@@ -29,7 +29,7 @@ const mdLinks = function markdownLinkExtractor(markdown) {
     links.push({
       href: href,
       text: text,
-      // title: title,
+      title: title,
     });
   };
   Marked(markdown, {renderer: renderer});
@@ -67,13 +67,18 @@ fs.readdir(cwdToString, (err, files) => {
             } 
             else {
               // retorna promesa con array de objeto
-              // console.log(mdLinks(data));
+              //console.log(mdLinks(data));
               mdLinks(data).forEach(element => {
                 fetch(`${element.href}`, { validate: true }).then((response)=>{
                   // retorna la lista de url con status
-                  // console.log(response.url, 
-                  //   response.status, 
-                  //   response.statusText);
+                  let arrData = {
+                    link : response.url,
+                    text : element.text,
+                    title : element.title,
+                    status : response.status,
+                    statutsTexto : response.statusText
+                  }
+                  console.log(arrData);
                 });
               });
             }
