@@ -1,4 +1,4 @@
-# Markdown Links
+<!-- # Markdown Links
 
 ## Preámbulo
 
@@ -355,4 +355,4 @@ habilidades blandas. Te aconsejamos revisar la rúbrica:
 
 - [ ] Pruebas unitarias cubren un mínimo del 70% de statements, functions,
       lines, y branches.
-- [ ] Pasa tests (y linters) (`npm test`).
+- [ ] Pasa tests (y linters) (`npm test`). -->

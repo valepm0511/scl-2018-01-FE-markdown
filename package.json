@@ -15,8 +15,8 @@
   ],
   "author": "Valeria Peñaloza",
   "license": "ISC",
-  "bin":{
-    "md-links" : "index.js"
+  "bin": {
+    "md-links": "index.js"
   },
   "bugs": {
     "url": "https://github.com/valepm0511/scl-2018-01-FE-markdown/issues"
@@ -31,6 +31,7 @@
   },
   "dependencies": {
     "colors": "^1.3.2",
+    "jest": "^23.5.0",
     "link": "^0.1.5",
     "node-fetch": "^2.2.0",
     "string-search": "^1.2.0"
