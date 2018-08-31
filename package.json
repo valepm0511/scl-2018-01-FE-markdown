@@ -1,5 +1,5 @@
 {
-  "name": "mdLinks",
+  "name": "mdlinks",
   "version": "0.0.1",
   "description": "libreria para detectar link",
   "main": "index.js",

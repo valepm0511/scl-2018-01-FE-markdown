@@ -1,6 +1,24 @@
 # Markdown Links
 
-## mi readme
+libreria para mostrar link y status de archivo con extensión .md 
+
+## Caracteristicas
+
+- Extrae los links de un archivo con extensión .md
+- Muestra el status de cada link
+
+## Version de la libreria
+
+<code>version 0.0.1</code>
+
+## Instalación
+
+<code> npm install save </code>     
+
+<code> npm install -g "link respositorio"</code>
+
+
+
 
 
 

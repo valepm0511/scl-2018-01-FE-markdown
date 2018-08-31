@@ -42,7 +42,7 @@ const mdLinks = function markdownLinkExtractor(markdown) {
 let currentDirectory = process.cwd(); /* Ruta actual del directorio */
 console.log(`directorio actual: ${process.cwd()}`);
 let cwdBuffer = Buffer.from(currentDirectory);
-const [,, ...userArgs] = process.argv; /*  */
+const [,, ...userArgs] = process.argv; /* comando ejecutable ingresada en consola */
 let validate = userArgs[0];
 
 fs.readdir(cwdBuffer, (err, files) => { /* Lee los contenidos del directorio */
