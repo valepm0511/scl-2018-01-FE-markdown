@@ -9,7 +9,7 @@ libreria para mostrar link y status de archivo con extensión .md
 
 ## Version de la libreria
 
-<code>version 0.0.1</code>
+<code>version 0.0.2</code>
 
 ## Instalación
 
