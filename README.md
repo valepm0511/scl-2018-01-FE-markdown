@@ -17,6 +17,10 @@ libreria para mostrar link y status de archivo con extensión .md
 
 <code> npm install -g https://github.com/valepm0511/scl-2018-01-FE-markdown</code>
 
+## Enlace a npm
+
+https://www.npmjs.com/package/mdlinks-vpm
+
 
 
 
